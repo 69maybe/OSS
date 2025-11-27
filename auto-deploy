@@ -1,9 +1,9 @@
-name: Auto Deploy to Somee via SFTP
+name: Auto Deploy HTML/CSS/JS to Somee
 
 on:
   push:
     branches:
-      - main  # Chạy khi push lên nhánh main
+      - main   # Chạy khi push lên nhánh main
 
 jobs:
   deploy:
@@ -16,10 +16,14 @@ jobs:
     - name: Deploy via SFTP
       uses: appleboy/scp-action@v0.1.4
       with:
-        host: ${{ secrets.SFTP_HOST }}       # FTP/SFTP host Somee
+        host: ${{ secrets.SFTP_HOST }}       # Ví dụ: ftp.somee.com
         username: ${{ secrets.SFTP_USER }}   # Username SFTP
         password: ${{ secrets.SFTP_PASS }}   # Password SFTP
-        port: ${{ secrets.SFTP_PORT }}       # Mặc định 22
-        source: "./"                         # Thư mục HTML/CSS/JS
-        target: "/wwwroot/"                   # Thư mục web trên Somee
-        rm: true                              # Xóa file cũ trên host trước khi upload
+        port: ${{ secrets.SFTP_PORT }}       # 22 cho SFTP
+        source: "./"                         # Upload toàn bộ repo
+        target: "/wwwroot/"                  # Web root Somee
+        rm: true                              # Xóa file cũ trước khi upload
+        exclude: |
+          .github/
+          protected/
+          .git/
