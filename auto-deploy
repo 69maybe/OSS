@@ -1,0 +1,25 @@
+.github/workflows/deploy.yml
+
+name: Auto Deploy to Somee
+
+on:
+  push:
+    branches:
+      - main   # Khi push lên main thì deploy
+
+jobs:
+  ftp-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: FTP Deploy
+      uses: SamKirkland/FTP-Deploy-Action@4.3.4
+      with:
+        server: ${{ secrets.Host-FTP }}
+        username: ${{ secrets.User-FTP }}
+        password: ${{ secrets.Passwd-FTP }}
+        server-dir: /public_html/   # Thư mục chứa web
+        local-dir: ./               # Thư mục code trong repo
