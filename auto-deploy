@@ -1,25 +1,25 @@
-.github/workflows/deploy.yml
-
-name: Auto Deploy to Somee
+name: Auto Deploy to Somee via SFTP
 
 on:
   push:
     branches:
-      - main   # Khi push lên main thì deploy
+      - main  # Chạy khi push lên nhánh main
 
 jobs:
-  ftp-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: FTP Deploy
-      uses: SamKirkland/FTP-Deploy-Action@4.3.4
+    - name: Deploy via SFTP
+      uses: appleboy/scp-action@v0.1.4
       with:
-        server: ${{ secrets.Host-FTP }}
-        username: ${{ secrets.User-FTP }}
-        password: ${{ secrets.Passwd-FTP }}
-        server-dir: /public_html/   # Thư mục chứa web
-        local-dir: ./               # Thư mục code trong repo
+        host: ${{ secrets.SFTP_HOST }}       # FTP/SFTP host Somee
+        username: ${{ secrets.SFTP_USER }}   # Username SFTP
+        password: ${{ secrets.SFTP_PASS }}   # Password SFTP
+        port: ${{ secrets.SFTP_PORT }}       # Mặc định 22
+        source: "./"                         # Thư mục HTML/CSS/JS
+        target: "/wwwroot/"                   # Thư mục web trên Somee
+        rm: true                              # Xóa file cũ trên host trước khi upload
