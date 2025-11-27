@@ -1,26 +1,23 @@
-name: Auto Deploy HTML/CSS/JS to Somee
+name: Auto Deploy to Somee
 
 on:
   push:
     branches:
-      - main   # Chạy khi push lên nhánh main
+      - main
 
 jobs:
-  deploy:
+  ftp-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Deploy via SFTP
-      uses: appleboy/scp-action@v0.1.4
+    - name: FTP Deploy
+      uses: SamKirkland/FTP-Deploy-Action@4.3.4
       with:
-        host: ${{ secrets.SFTP_HOST }}       # Ví dụ: ftp.somee.com
-        username: ${{ secrets.SFTP_USER }}   # Username SFTP
-        password: ${{ secrets.SFTP_PASS }}   # Password SFTP
-        port: ${{ secrets.SFTP_PORT }}       # 22 cho SFTP
-        source: "./"                         # Upload toàn bộ repo
-        target: "/wwwroot/"                  # Web root Somee
-        rm: true                              # Xóa file cũ trước khi upload
-        
+        server: ${{ secrets.SFTP_HOST }}   # maybe.somee.com
+        username: ${{ secrets.SFTP_USER }}
+        password: ${{ secrets.SFTP_PASS }}
+        server-dir: /wwwroot/
+        local-dir: ./
