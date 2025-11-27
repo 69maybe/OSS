@@ -23,7 +23,4 @@ jobs:
         source: "./"                         # Upload toàn bộ repo
         target: "/wwwroot/"                  # Web root Somee
         rm: true                              # Xóa file cũ trước khi upload
-        exclude: |
-          .github/
-          protected/
-          .git/
+        
