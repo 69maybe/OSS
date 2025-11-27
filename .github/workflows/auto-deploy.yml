@@ -19,5 +19,5 @@ jobs:
         server: ${{ secrets.SFTP_HOST }}   # maybe.somee.com
         username: ${{ secrets.SFTP_USER }}
         password: ${{ secrets.SFTP_PASS }}
-        server-dir: /www/
+        server-dir: /www.maybe.somee.com/
         local-dir: ./
